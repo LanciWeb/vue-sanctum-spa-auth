@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header class="bg-dark p-3">
+      <nav class="d-flex align-items-center justify-content-between">
+        <router-link :to="{ name: 'home' }">Home</router-link>
+        <router-link v-if="!isLogged" :to="{ name: 'login' }"
+          >Login</router-link
+        >
+        <LogoutButton />
+      </nav>
+    </header>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import LogoutButton from "./components/LogoutButton.vue";
+import { default as auth, isLogged } from "@/store/auth";
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  name: "App",
+  components: { LogoutButton },
+  computed: {
+    auth,
+    isLogged,
+  },
+};
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
+<style>
+a {
+  color: #fff;
+  text-decoration: none;
 }
 </style>
+
